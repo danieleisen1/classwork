@@ -5,7 +5,7 @@ public class IntroMain {
 	
 	public static final String[] DESCRIPTIONS = {" is a teacher at BTHS", " is a student at BTHS"};
 		
-			
+	public static final String[] NAMES = {"Mark","Alex","Edward","Steven","Daniel","Jimmy","Hannah","Stacy","Koby","Maria"};	
 			
 		//This is the first method that is executed. It is static because it is independent of instances.
 	
@@ -19,7 +19,7 @@ public class IntroMain {
 		
 		int numberOfPeople = 10;
 		for(int i = 0; i < numberOfPeople; i++) {
-			CodingConventions conventionsInstance = new CodingConventions("Mr.Nockles",i%2);
+			CodingConventions conventionsInstance = new CodingConventions(i,i%2);
 			
 			//A note on local variables: they are NOT FIELDS (HAS-A relationships)
 			//they are variables that are only used in the scope of a method
