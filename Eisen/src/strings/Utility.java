@@ -22,13 +22,56 @@ public class Utility{
 
 	}
 
+	/**
+	 * This method returns the index of keyword in the
+	 * searchString (after startPsn) where keyword is isolated and hasnoNegations. 
+	 * It returns -1 if the keyword is not found.
+	 */
+	public static int findKeyword(String searchString, String keyword, int startPsn){
+		//makes lower case
+		searchString = searchString.toLowerCase();
+		keyword = keyword.toLowerCase();
+		//find the first position after the startPsn
+		int psn = searchString.indexOf(keyword, startPsn);
+		
+		//keep searching until keyword is found (noNegations and isolated)
+		while(psn >= 0) {
+			
+			if(keywordIsIsolated(psn, keyword, searchString) && noNegations(searchString, psn)) {
+				return psn;
+			}else {
+				//look for the next occurrence
+				psn = searchString.indexOf(keyword, psn + 1);
+			}
+		}
+		return -1;
+	}
+	
+	
 	public static boolean keywordIsIsolated(int psn, String keyword, String s){
-		return true;
+		if(psn + keyword.length() == s.length())
+			return true;
+		
+		else if(s.substring(psn + keyword.length()+1).compareTo("a") < 0)
+			return true;
+		
+		else if(s.substring(psn + keyword.length() + 1).equals(keyword + " "))
+			return true;
+		
+		return false;
 	}
 
-	public static boolean noNegations(String s, int psn){
-		return true;
-	}
+	 public static boolean noNegations(String s, int psn){
+		  String not = "not";
+		  String no = "no";
+		  if(psn == 0) {
+			  return true;
+		  }
+		  if(psn > 3 && not.equals(s.substring(psn-4,psn-1)) || no.equals(s.substring(psn-3, psn-1))) {
+			  return false;
+		  }
+		  return true;
+	  }
 
 
 	public static String getInput(){
