@@ -2,13 +2,13 @@ package attendance;
 
 public class Student implements Attendee {
 
-	private String firstName;
-	private String lastName;
+	private String first;
+	private String last;
 	private boolean present;
 	
-	public Student(String firstName, String lastName) {
-		this.firstName = firstName;
-		this.lastName = lastName;
+	public Student(String first, String last) {
+		this.first = first;
+		this.last = last;
 		present = false;
 	}
 	
@@ -20,26 +20,26 @@ public class Student implements Attendee {
 		this.present = present;
 	}
 	
-	public String getFirstName() {
-		return firstName;
+	public String getfirst() {
+		return first;
 	}
 	
-	public String getLastName() {
-		return lastName;
+	public String getlast() {
+		return last;
 	}
 	
 	public boolean mathces(String first, String last) {
-		return first.toLowerCase().equals(firstName.toLowerCase()) && last.toLowerCase().equals(lastName.toLowerCase());
+		return first.toLowerCase().equals(first.toLowerCase()) && last.toLowerCase().equals(last.toLowerCase());
 	}
 	
 	public boolean matches(String last) {
-		return first.toLowerCase().equals(firstName.toLowerCase()) && last.toLowerCase().equals(lastName.toLowerCase());
+		return first.toLowerCase().equals(first.toLowerCase()) && last.toLowerCase().equals(last.toLowerCase());
 	}
 	
 	public String getReportString(){
-		String report = lastName;
+		String report = last;
 		report = restrictStringToLength(report,20);
-		report+=firstName;
+		report+=first;
 		report = restrictStringToLength(report,40);
 		if(present) {
 			report+="PRESENT\n";
