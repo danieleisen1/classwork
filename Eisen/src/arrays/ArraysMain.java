@@ -8,6 +8,74 @@ public class ArraysMain {
 	private String[] values;
 	
 	public ArraysMain() {
+		int[] testArr = {1,4,3,5,2,3,4,7,5,4,4,1,2,3,4,5,6,7};
+		lcs(testArr);
+		
+	}
+	
+	private void tuesdayMethods() {
+		int[] orderTest = {1,2,3,4,5,6,7,8,9,10};
+		cycleThrough(orderTest,5);
+		System.out.println(Arrays.toString(orderTest));
+	}
+	//lcs longest consecutive sequence
+	private int lcs(int[]arr) {
+		int ct = 1;
+		int max = 1;
+		for (int i = 0; i < arr.length-1; i++) {
+		    if (arr[i] + 1 == arr[i + 1]) {
+		        ct++;
+		    } 
+		    else {
+		        ct = 1;
+		    }
+		    if (ct > max) {
+		        max = ct;
+		    }
+		}
+		return max;
+	}
+
+	
+	private void cycleThrough(int[] orderTest, int n) {
+		for(int i = 0; i < n; i++) {
+			frontToBack(orderTest);
+		}
+	
+	}
+
+	private void frontToBack(int[]arr) {
+		int x = arr[0];
+		for(int i = 0; i < arr.length-1; i++) {
+			arr[i] = arr[i+1];
+		}
+		arr[arr.length-1] = x;
+	}
+	
+	 
+	
+	private void warmUpMethods() {
+		int[] orderTest = {1,2,3,4,5,6,7,8,9,10};
+		reverseOrder(orderTest);
+		System.out.println(Arrays.toString(orderTest));
+		System.out.println(Arrays.toString(subArray(orderTest,3,4)));
+	}
+	
+	private void reverseOrder(int[]arr) {
+		for(int i=0; i<arr.length/2; i++) {
+			swap(arr,i,arr.length-1-i);
+		}
+	}
+	
+	public int[] subArray(int[]arr, int psn, int length) {
+		int[] sub = new int[length];
+		for(int i = 0; i < length; i++) {
+			sub[i] = arr[i+psn];
+		}
+		return sub;
+	}
+	
+	public void cardMethods() {
 		suits = new String[4];
 		suits[0] = "Clubs";
 		suits[1] = "Hearts";
@@ -22,7 +90,6 @@ public class ArraysMain {
 		values[11] = "Queen";
 		values[10] = "Jack";
 		printDeck();
-		//System.out.println(Arrays.toString(intRay));
 	}
 	private String[] printDeck() {
 		String[] deck = new String[52];
@@ -131,5 +198,8 @@ public class ArraysMain {
 		}
 		return roll;
 	}
-
+	
+	
+	
+	
 }
