@@ -4,104 +4,125 @@ import java.util.Arrays;
 
 public class ArraysMain {
 
-	private String[] suits;
-	private String[] values;
+	private String[] testArray;
+	private int[] intRay;
 	
 	public ArraysMain() {
-		int[] testArr = {1,4,3,5,2,3,4,7,5,4,4,1,2,3,4,5,6,7};
-		lcs(testArr);
+//		int[] consecTest1 = {1,2,3,6,7,8,9,10,11,45,46,47};
+//		int[] consecTest2 = {10,11,12,13,14,15,6,7,8,9,10,11,45,46,47};
+		int[] randomRolls = new int[1000];
+		populate(randomRolls);
+		
+//		System.out.println("The longest sequence in the first test is " + longestConsecutiveSequence(consecTest1));
+//		System.out.println("The longest sequence in the second test is " + longestConsecutiveSequence(consecTest2));
+		int[] result = longestConsecSeqAndPos(randomRolls);
+		System.out.println("The longest sequence of dice rolls is " + result[0] +
+				" it happened on the " + (result[1]+1) +"th roll. Starting with a roll of "+randomRolls[result[1]]+".");
+	}
+
+	/**
+	 * returns the length of the longest sequence of consecutive integers in arr
+	 * For example lCS({1,2,3,7,8,9,10}) returns 4 because 7,8,9,10 is 4 integers long
+	 * @param arr
+	 * @return
+	 */
+	
+	
+	/**
+	 * returns two pieces of information data[0] which is the length of the longest sequence and
+	 * data[1] which is the position where the sequence begins
+	 * @param arr
+	 * @return
+	 */
+	public int[] longestConsecSeqAndPos(int[] arr) {
+		int[] data = new int[2];
+		return data;
+	}
+	
+	/**
+	 * returns true if arr[pos] and arr[pos+1] are sequential 
+	 * @param arr
+	 * @param pos
+	 * @return
+	 */
+	private int longestConsecutiveSequence(int[] arr) {
+		int data[0] = new int[2];
+		data[0] = 1;
+		int currentCount = 1;
+		for(int i = 0; i < arr.length; i++) {
+			while(i + currentCount < arr.length && 
+					isConsecutive(arr, i, i+currentCount)) {
+				currentCount++;
+			}
+			if(currentCount > data[0]) {
+				data[0] = currentCount;
+				data[i] = i;
+			}
+			i = i + currentCount-1;//saves time
+			currentCount = 1;
+		}
+		return data[0];
+	}
+	
+	/**
+	 * returns true if all of the elements from start to end are increasing by 1
+	 * example: 
+	 * iC({1,7,3,6,7,8,12},3,5) -> true
+	 * @param arr
+	 * @param start
+	 * @param end
+	 * @return
+	 */
+	private boolean isConsecutive(int[] arr, int start, int end) {
+		for(int i = start; i < end; i++ ) {
+			if(arr[i] + 1 != arr[i+1]) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public int[] reverseOrder(int[] arr) {
+		int[] newArr = new int[arr.length];
+		for(int i = 0; i < arr.length; i++) {
+			newArr[i] = arr[arr.length - 1 - i];
+		}
+		return newArr;
+	}
+	
+
+	public void reverseOrderOriginal(int[] arr) {
+		for(int i = 0; i < arr.length/2; i++) {
+			swap(arr, i, arr.length - 1 - i);
+		}
+	}
+	
+	/**
+	 * moves the front to the back repeatedly, exactly n times
+	 * @param arr
+	 * @param n
+	 */
+	public void cycleThrough(int[] arr, int n) {
 		
 	}
 	
-	private void tuesdayMethods() {
-		int[] orderTest = {1,2,3,4,5,6,7,8,9,10};
-		cycleThrough(orderTest,5);
-		System.out.println(Arrays.toString(orderTest));
-	}
-	//lcs longest consecutive sequence
-	private int lcs(int[]arr) {
-		int ct = 1;
-		int max = 1;
-		for (int i = 0; i < arr.length-1; i++) {
-		    if (arr[i] + 1 == arr[i + 1]) {
-		        ct++;
-		    } 
-		    else {
-		        ct = 1;
-		    }
-		    if (ct > max) {
-		        max = ct;
-		    }
-		}
-		return max;
-	}
-
-	
-	private void cycleThrough(int[] orderTest, int n) {
-		for(int i = 0; i < n; i++) {
-			frontToBack(orderTest);
-		}
-	
-	}
-
-	private void frontToBack(int[]arr) {
-		int x = arr[0];
-		for(int i = 0; i < arr.length-1; i++) {
-			arr[i] = arr[i+1];
-		}
-		arr[arr.length-1] = x;
+	/**
+	 * remove the element at index zero, push every other element up by one. 1 to 0, 2 to 1, etc...
+	 * Put the element that was at zero at the end of arr
+	 * @param arr
+	 */
+	public void frontToBack(int[] arr) {
+		
 	}
 	
-	 
-	
-	private void warmUpMethods() {
-		int[] orderTest = {1,2,3,4,5,6,7,8,9,10};
-		reverseOrder(orderTest);
-		System.out.println(Arrays.toString(orderTest));
-		System.out.println(Arrays.toString(subArray(orderTest,3,4)));
-	}
-	
-	private void reverseOrder(int[]arr) {
-		for(int i=0; i<arr.length/2; i++) {
-			swap(arr,i,arr.length-1-i);
+	public int countLessThan(int[] arr, int n) {
+		int count = 0;
+		for(int value: arr) {
+			if(value < n)count++;
 		}
+		return count;
 	}
 	
-	public int[] subArray(int[]arr, int psn, int length) {
-		int[] sub = new int[length];
-		for(int i = 0; i < length; i++) {
-			sub[i] = arr[i+psn];
-		}
-		return sub;
-	}
-	
-	public void cardMethods() {
-		suits = new String[4];
-		suits[0] = "Clubs";
-		suits[1] = "Hearts";
-		suits[2] = "Diamonds";
-		suits[3] = "Spades";
-		values = new String[13];
-		for(int i = 0; i<values.length; i++) {
-			values[i] = "" + (i+1);
-		}
-		values[0] = "Ace";
-		values[12] = "King";
-		values[11] = "Queen";
-		values[10] = "Jack";
-		printDeck();
-	}
-	private String[] printDeck() {
-		String[] deck = new String[52];
-		int index = 0;
-		for(String suit : suits) {
-			for(String value : values) {
-				System.out.println(value + " of " +suit);
-				index++;
-			}
-		}
-		return deck;
-	}
 	private void shuffle(int[] arr) {
 		for(int i = 0; i < arr.length; i++) {
 			swap(arr,(int)(Math.random()*arr.length), 
@@ -144,7 +165,7 @@ public class ArraysMain {
 		
 	}
 
-	//public void notes() {
+	public void notes() {
 		//1. collection of primitives or objects
 		//SPECIAL NOTE: This is the ONLY collection of primitives
 		
@@ -159,28 +180,28 @@ public class ArraysMain {
 		//_________________________________________
 		
 		//There two types of constructors, the first we've seen already:
-		//int[] firstType = {3,14,-9,10};
+		int[] firstType = {3,14,-9,10};
 		//this constructor can only be used at the declaration. Error:
 		//firstType = {12,13,14,15};
 		
 		//the 2nd type:
-		//testArray = new String[50];
+		testArray = new String[50];
 		/*SPECIAL NOTE: for primitive arrays, when they are instantiated,
 		they are automatically populated with 0s. This is not the case with 
 		Object arrays, which are populated with 'null'
 		*/
 		
 		//standard 'for' loop
-		//for(int i = 0; i < testArray.length; i++) {
-		//	System.out.println("The #"+i+" item is:"+testArray[i]);
-	//	}
+		for(int i = 0; i < testArray.length; i++) {
+			System.out.println("The #"+i+" item is:"+testArray[i]);
+		}
 		
 		//for each loop (useful only when you don't need to keep track of an index
-	//	for(String value:testArray) {
+		for(String value:testArray) {
 			//"for each int in testArray..."
-		//	System.out.println(value);
-	//	}
-	//}
+			System.out.println(value);
+		}
+	}
 	
 	public static void main(String[] args) {
 		ArraysMain arrayPractice = new ArraysMain();
@@ -198,8 +219,5 @@ public class ArraysMain {
 		}
 		return roll;
 	}
-	
-	
-	
-	
+
 }
