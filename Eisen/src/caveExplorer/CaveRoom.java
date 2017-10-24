@@ -43,6 +43,59 @@ public class CaveRoom {
 		 return direction[dir];
 	}
 
+	public void enter() {
+		contents = "X";
+	}
+	
+	public void leave() {
+		contents = defaultContents;
+	}
+	
+	public void setConnection(int direction, CaveRoom anotherRoom, Door door) {
+		addRoom(direction, anotherRoom, door);
+		anotherRoom.addRoom(oppositeDirection(direction), this, door);
+		
+	}
+	
+	public void interpretInput(String input) {
+		while(!isValid(input)) {
+			System.out.println("You can only enter 'w', 'a', 's', or 'd'.");
+			input = CaveExplorer.in.nextLine();
+		}
+		int direction = "wdsa".indexOf(input);
+		
+		goToRoom(direction);
+	}
+	
+	public boolean isValid(String input) {
+		return input.compareTo("w") >= 0 ||input.compareTo("a") >= 0 || input.compareTo("s") >= 0 || input.compareTo("d") >= 0;
+	}
+	
+	public void goToRoom(int direction) {
+		if(borderingRooms[direction] != null && doors[direction] != null &&	doors[direction].isOpen()) {
+				CaveExplorer.currentRoom.leave();
+				CaveExplorer.currentRoom.borderingRooms[direction]();
+				CaveExplorer.currentRoom.enter();
+				CaveExplorer.inventory.updateMap();
+			}else {
+				System.err.println("You can't do that!");
+			}
+		}
+	}
+	
+	private void addRoom(int oppositeDirection, CaveRoom caveRoom, Door door) {
+		borderingRooms[dir] = caveRoom;
+		doors[dir] = door;
+		setDirections();
+	}
+	
+	
+
+
+	private static int oppositeDirection(int dir) {
+		return(dir + 2) % 4;
+	}
+
 
 	public void setDefaultContents(String defaultContents) {
 		this.defaultContents = defaultContents;
